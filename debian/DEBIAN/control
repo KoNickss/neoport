@@ -1,0 +1,9 @@
+Package: neoport
+Version 1.0.0
+Depends: git
+Priority: optional
+Architecture: amd64
+Installed-Size: 19
+Maintainer: KoNicks <konicksdev@gmail.com>
+Description: CLI package manager for neovim
+
