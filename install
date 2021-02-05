@@ -2,6 +2,8 @@
 user=$(who | cut -f 1 -d ' ')
 echo "==> Please read the information in README.md and LICENSE carefully before running this"
 echo "==> Welcome to the neoports setup"
+if [[ $(cat /etc/neoport) == "" ]];
+then
 PS3="Choose the distribution to compile for (4 to quit):"
 distros=("debian" "arch" "other-distro/other-architecture-(will-not-register-in-the-pm)" "quit")
 select distro in ${distros[@]};
@@ -9,6 +11,7 @@ do
 	echo "==> Installing for $distro"
 	if [[ $REPLY == 3 ]];
 	then
+		echo 3 > /etc/neoport
 		cp ./neoport /usr/bin/neoport
 		chmod +x /usr/bin/neoport
 		echo "==> Installation complete, run neoport setup to initialize the files and neoport --help for info"
@@ -20,6 +23,7 @@ do
 	fi
 	if [[ $REPLY == 2 ]];
 	then
+		echo 2 > /etc/neoport
 		cp ./neoport ./arch/neoport
 		chown -hR $user arch
 		cd arch
@@ -27,14 +31,45 @@ do
 		sudo -u $user makepkg --noconfirm 
 		clear
 		pacman -U *.zst
+		echo "==> Installation complete, run neoport setup to initialize the files and neoport --help for info"
 		exit
 	fi
 	if [[ $REPLY == 1 ]];
 	then
-		cp ./neoport ./debian/usr/bin/neoport
+		echo 1 > /etc/neoport
+		cp ./neoport.src.bash ./debian/usr/bin/neoport
 		dpkg -b debian
 		clear
 		apt install *.deb
+		echo "==> Installation complete, run neoport setup to initialize the files and neoport --help for info"
 		exit
 	fi
 done
+fi
+if [[ $(cat /etc/neoport) == 1 ]];
+then
+	echo 1 > /etc/neoport
+	cp ./neoport.src.bash ./debian/usr/bin/neoport
+	dpkg -b debian
+	clear
+	apt install *.deb
+	exit
+fi
+if [[ $(cat /etc/neoport) == 2 ]];
+then
+	echo 2 > /etc/neoport
+	cp ./neoport ./arch/neoport
+	chown -hR $user arch
+	cd arch
+	sudo -u $user makepkg --printsrcinfo > .SRCINFO
+	sudo -u $user makepkg --noconfirm 
+	clear
+	pacman -U *.zst
+	exit
+fi
+if [[ $(cat /etc/neoport) == 3 ]];
+then
+	echo 3 > /etc/neoport
+	cp ./neoport /usr/bin/neoport
+	chmod +x /usr/bin/neoport
+fi

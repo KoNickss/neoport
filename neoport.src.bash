@@ -1,4 +1,16 @@
 #!/bin/bash
+if [[ $1 == 1up ]];
+then
+	if [[ $(whoami) != root ]];
+	then
+		echo "This needs to be ran as root"
+	fi
+	if [[ $(whoami) == root ]];
+	then
+		git clone https://github.com/konickss/neoport /tmp/neoport
+		/tmp/neoport/install
+	fi
+fi
 if [[ $1 == setup ]];
 then
 	mkdir ~/.config/nvim
@@ -74,7 +86,7 @@ then
 fi
 if [[ $1 == --help ]];
 then
-	echo "neoPort"
+	echo "neoPort v1.0.0"
 	echo "================================================"
 	echo "neoPort is an easy to use command-line package"
 	echo "manager for NeoVim (not vim). It has support for"

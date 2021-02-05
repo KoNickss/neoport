@@ -29,6 +29,7 @@ pkgbase = neoport
 	makedepends = sudo
 	makedepends = texinfo
 	makedepends = which
+	depends = git
 	provides = neoport
 	source = neoport
 	md5sums = SKIP
