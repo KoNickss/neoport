@@ -44,7 +44,7 @@ do
 		cp ./neoport.src.bash ./debian/usr/bin/neoport
 		dpkg -b debian
 		clear
-		apt install *.deb
+		apt install ./debian.deb
 		echo "==> Installation complete, run neoport setup to initialize the files and neoport --help for info"
 		exit
 	fi

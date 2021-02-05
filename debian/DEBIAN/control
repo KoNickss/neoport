@@ -1,6 +1,6 @@
 Package: neoport
-Version 1.0.2
-Depends: git
+Version: 1.0.2
+Depends: git 
 Priority: optional
 Architecture: amd64
 Installed-Size: 19
