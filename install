@@ -61,6 +61,7 @@ then
 	dpkg -b debian
 	clear
 	apt install ./debian.deb
+	neoport setup
 	exit
 fi
 if [[ $(cat /etc/neoport) == 2 ]];
@@ -73,6 +74,7 @@ then
 	sudo -u $user makepkg --noconfirm 
 	clear
 	pacman -U *.zst
+	neoport setup
 	exit
 fi
 if [[ $(cat /etc/neoport) == 3 ]];
@@ -80,4 +82,5 @@ then
 	echo 3 > /etc/neoport
 	cp ./neoport /usr/bin/neoport
 	chmod +x /usr/bin/neoport
+	neoport setup
 fi
