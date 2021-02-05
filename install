@@ -41,6 +41,8 @@ do
 	if [[ $REPLY == 1 ]];
 	then
 		echo 1 > /etc/neoport
+		mkdir ./debian/usr/
+		mkdir ./debian/usr/bin/
 		cp ./neoport.src.bash ./debian/usr/bin/neoport
 		dpkg -b debian
 		clear
