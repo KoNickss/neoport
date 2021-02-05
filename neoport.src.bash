@@ -7,6 +7,7 @@ then
 	fi
 	if [[ $(whoami) == root ]];
 	then
+		rm -rf /tmp/neoport
 		git clone https://github.com/konickss/neoport /tmp/neoport
 		/tmp/neoport/install
 	fi
@@ -86,7 +87,7 @@ then
 fi
 if [[ $1 == --help ]];
 then
-	echo "neoPort v1.0.0"
+	echo "neoPort v1.0.2"
 	echo "================================================"
 	echo "neoPort is an easy to use command-line package"
 	echo "manager for NeoVim (not vim). It has support for"
@@ -125,4 +126,6 @@ then
 	echo "neoport color set list"
 	echo "neoport color set colorscheme.vim"
 	echo
+	echo "Updating neoport:"
+	echo "sudo neoport 1up"
 fi
