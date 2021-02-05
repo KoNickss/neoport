@@ -1,4 +1,8 @@
 #!/bin/bash
+if [[ $1 == u ]];
+then
+	cd /tmp/neoport
+fi
 user=$(who | cut -f 1 -d ' ')
 echo "==> Please read the information in README.md and LICENSE carefully before running this"
 echo "==> Welcome to the neoports setup"

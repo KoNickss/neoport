@@ -9,7 +9,7 @@ then
 	then
 		rm -rf /tmp/neoport
 		git clone https://github.com/konickss/neoport /tmp/neoport
-		/tmp/neoport/install
+		/tmp/neoport/install u
 	fi
 fi
 if [[ $1 == setup ]];
