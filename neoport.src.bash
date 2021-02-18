@@ -128,4 +128,6 @@ then
 	echo
 	echo "Updating neoport:"
 	echo "sudo neoport 1up"
+	echo 
+	echo "TO SET UP NEOPORT FOR A USER, RUN 'neoport setup'"
 fi
