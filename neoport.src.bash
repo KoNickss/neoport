@@ -73,13 +73,13 @@ then
 	then
 		if [[ $3 == list ]];
 		then
-			lst=$(ls ~/.config/nvim/colors/)
-			lst=${lst/record.vim}
+			lst=$(ls ~/.config/nvim/colors/ | sed 's/\.bed *$//')
+			lst=${lst/record}
 			echo $lst
 		fi
 		if [[ $3 != list ]];
 		then
-			echo "source ~/.config/nvim/colors/$3" > ~/.config/nvim/colors/record.vim
+			echo "color $3" > ~/.config/nvim/colors/record.vim
 
 		fi
 	fi
@@ -87,7 +87,7 @@ then
 fi
 if [[ $1 == --help ]];
 then
-	echo "neoPort v1.0.2"
+	echo "neoPort v1.0.3"
 	echo "================================================"
 	echo "neoPort is an easy to use command-line package"
 	echo "manager for NeoVim (not vim). It has support for"
@@ -97,7 +97,7 @@ then
 	echo "managers can cause conflicts with manually ported"
 	echo "color schemes. Extensions don't usually conflict"
 	echo "but, once again, I recommend doing this on a fresh"
-	echo "NeoVim install"
+	echo "neovim install"
 	echo "================================================"
 	echo "Why did I make neoPort? I was tired of plug-in"
 	echo "managers that were clunky, required file editing"
@@ -124,7 +124,7 @@ then
 	echo 
 	echo "Listing installed color schemes and applying one:"
 	echo "neoport color set list"
-	echo "neoport color set colorscheme.vim"
+	echo "neoport color set colorscheme"
 	echo
 	echo "Updating neoport:"
 	echo "sudo neoport 1up"
