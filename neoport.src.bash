@@ -73,7 +73,7 @@ then
 	then
 		if [[ $3 == list ]];
 		then
-			lst=$(ls ~/.config/nvim/colors/ | sed 's/\.bed *$//')
+			lst=$(ls ~/.config/nvim/colors/ | sed 's/\.vim *$//')
 			lst=${lst/record}
 			echo $lst
 		fi
