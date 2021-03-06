@@ -9,6 +9,7 @@ then
 	then
 		rm -rf /tmp/neoport
 		git clone https://github.com/konickss/neoport /tmp/neoport
+		cd /tmp/neoport/
 		/tmp/neoport/install u
 	fi
 fi

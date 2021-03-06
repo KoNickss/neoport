@@ -3,7 +3,6 @@ if [[ $1 == u ]];
 then
 	cd /tmp/neoport
 fi
-user=$(who | cut -f 1 -d ' ')
 echo "==> Please read the information in README.md and LICENSE carefully before running this"
 echo "==> Welcome to the neoports setup"
 if [[ $(cat /etc/neoport) == "" ]];
@@ -29,10 +28,10 @@ do
 	then
 		echo 2 > /etc/neoport
 		cp ./neoport ./arch/neoport
-		chown -hR $user arch
+		chown -hR nobody arch
 		cd arch
-		sudo -u $user makepkg --printsrcinfo > .SRCINFO
-		sudo -u $user makepkg --noconfirm 
+		sudo -u nobody makepkg --printsrcinfo > .SRCINFO
+		sudo -u nobody makepkg --noconfirm 
 		clear
 		pacman -U *.zst
 		neoport setup
@@ -67,10 +66,10 @@ if [[ $(cat /etc/neoport) == 2 ]];
 then
 	echo 2 > /etc/neoport
 	cp ./neoport ./arch/neoport
-	chown -hR $user arch
+	chown -hR nobody arch
 	cd arch
-	sudo -u $user makepkg --printsrcinfo > .SRCINFO
-	sudo -u $user makepkg --noconfirm 
+	sudo -u nobody makepkg --printsrcinfo > .SRCINFO
+	sudo -u nobody makepkg --noconfirm 
 	clear
 	pacman -U *.zst
 	exit
