@@ -1,6 +1,7 @@
 #!/bin/bash
 reset="\e[0m"
 green="\e[0;32m"
+red="\e[0;31m"
 purple="\e[0;35m"
 yellow="\e[0;33m"
 if [[ $1 == 1up ]];
@@ -39,7 +40,7 @@ then
 	echo "set rtp+=~/.config/nvim/ports/$exname" >> ~/.config/nvim/ports/record.vim
 	srcname=$(ls ~/.config/nvim/ports/$exname/plugin/ | grep .vim)
 	echo "source ~/.config/nvim/ports/$exname/plugin/$srcname" >> ~/.config/nvim/ports/record.vim
-	echo "${green}==> Done.${reset}"
+	echo -e "${green}==> Done.${reset}"
 fi
 if [[ $1 == update ]];
 then
@@ -56,7 +57,7 @@ then
 		cd ..
 	done
 fi
-if [[ $1 == color ]]
+if [[ $1 == color ]];
 then
 	if [[ $2 == install ]];
 	then
