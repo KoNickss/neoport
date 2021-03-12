@@ -18,6 +18,6 @@ To install an extension from github, simply run `neoport install author/repo`, a
 
 To update every single extension run `neoport update`
 
-To install a colour theme do `neoport color install author/repo`, to change your colour theme just do `neoport color set list` to get a list and `neoport color set name.vim` to set it.
+To install a colour theme do `neoport color install author/repo`, to change your colour theme just do `neoport color set list` to get a list and `neoport color set name` to set it.
 
 To update the neoport installaton run `sudo neoport 1up`
