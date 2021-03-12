@@ -1,4 +1,8 @@
 #!/bin/bash
+reset="\e[0m"
+green="\e[0;32m"
+purple="\e[0;35m"
+yellow="\e[0;33m"
 if [[ $1 == 1up ]];
 then
 	if [[ $(whoami) != root ]];
@@ -27,25 +31,25 @@ fi
 if [[ $1 == install ]];
 then
 	exname=$(echo $2 | cut -f 2 -d '/')
-	echo "==> Cloning git repo"
+	echo -e "${purple}==> Cloning git repo${reset}"
 	git clone https://github.com/$2 ~/.config/nvim/ports/$exname
 	cd ~/.config/nvim/ports/$exname
-	echo "==> Installing extension"
-	echo "==> Registering extension in database"
+	echo -e "${green}==> Installing extension${reset}"
+	echo -e "${yellow}==> Registering extension in database${reset}"
 	echo "set rtp+=~/.config/nvim/ports/$exname" >> ~/.config/nvim/ports/record.vim
 	srcname=$(ls ~/.config/nvim/ports/$exname/plugin/ | grep .vim)
 	echo "source ~/.config/nvim/ports/$exname/plugin/$srcname" >> ~/.config/nvim/ports/record.vim
-	echo "==> Done."
+	echo "${green}==> Done.${reset}"
 fi
 if [[ $1 == update ]];
 then
 	declare -a plist
-	echo "==> Fetching extension list"
+	echo -e "${purple}==> Fetching extension list${reset}"
 	plist=$(ls ~/.config/nvim/ports/)
 	plist=${plist/record.vim}
 	for extension in $plist
 	do
-		echo "==> Updating $extension"
+		echo -e "${green}==> Updating $extension${reset}"
 		cd ~/.config/nvim/ports/$extension
 		git config pull.rebase false
 		git pull
@@ -56,13 +60,13 @@ if [[ $1 == color ]]
 then
 	if [[ $2 == install ]];
 	then
-		echo "==> Creating work directory"
+		echo -e "${purple}==> Creating work directory${reset}"
 		rm -rf ~/.tmp/neoport/*
 		mkdir ~/.tmp
 		mkdir ~/.tmp/neoport
-		echo "==> Cloning git repo"
+		echo -e "${purple}==> Cloning git repo${reset}"
 		git clone https://github.com/$3 ~/.tmp/neoport/col
-		echo "==> Installing color scheme"
+		echo -e "${green}==> Installing color scheme${reset}"
 		cp ~/.tmp/neoport/col/colors/*.vim ~/.config/nvim/colors/
 		ttbi=$(ls ~/.tmp/neoport/col/colors/ | cut -f 1 -d ' ')
 		echo
@@ -88,7 +92,7 @@ then
 fi
 if [[ $1 == --help ]];
 then
-	echo "neoPort v1.0.3"
+	echo "neoPort v1.0.4"
 	echo "================================================"
 	echo "neoPort is an easy to use command-line package"
 	echo "manager for NeoVim (not vim). It has support for"

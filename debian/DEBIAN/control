@@ -1,5 +1,5 @@
 Package: neoport
-Version: 1.0.3
+Version: 1.0.4
 Depends: git 
 Priority: optional
 Architecture: amd64
