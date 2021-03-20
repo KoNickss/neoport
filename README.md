@@ -1,4 +1,4 @@
-# NeoPort for Linux
+# NeoPort for Linux and macOS
 ## Installation
 To install the program, run the install executable with root privileges (`sudo ./install`) and follow the instructions.
 
