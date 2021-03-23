@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # NeoPort for Lnx and macOS
+=======
+# NeoPort for Linux and macOS
+>>>>>>> c5cae63ced0d66d550917c3c5a6d0203dc0330f7
 ## Installation
 To install the program on Lnx, run the install executable with root privileges (`sudo ./install`) and follow the instructions.
 You can also find binaries in the Release isle for Lnx and macOS
