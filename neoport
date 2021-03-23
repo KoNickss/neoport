@@ -1,9 +1,20 @@
 #!/bin/bash
-reset="\e[0m"
-green="\e[0;32m"
-red="\e[0;31m"
-purple="\e[0;35m"
-yellow="\e[0;33m"
+if [[ $(uname) == "Linux" ]];
+then
+	reset="\e[0m"
+	green="\e[0;32m"
+	red="\e[0;31m"
+	purple="\e[0;35m"
+	yellow="\e[0;33m"
+fi
+if [[ $(uname) == "Darwin" ]];
+then
+	reset="\033[0m"
+	green="\033[0;32m"
+	red="\033[0;31m"
+	purple="\033[0;35m"
+	yellow="\033[0;33m"
+fi
 #if [[ $1 == 1up ]];
 #then
 #	if [[ $(whoami) != root ]];
@@ -32,11 +43,11 @@ fi
 if [[ $1 == install ]];
 then
 	exname=$(echo $2 | cut -f 2 -d '/')
-	echo -e "${purple}==> Cloning git repo${reset}"
+	echo -e "${purple}==>${reset} Cloning git repo"
 	git clone https://github.com/$2 ~/.config/nvim/ports/$exname
 	cd ~/.config/nvim/ports/$exname
-	echo -e "${green}==> Installing extension${reset}"
-	echo -e "${yellow}==> Registering extension in database${reset}"
+	echo -e "${green}==>${reset} Installing extension"
+	echo -e "${yellow}==>${reset} Registering extension in database"
 	echo "set rtp+=~/.config/nvim/ports/$exname" >> ~/.config/nvim/ports/record.vim
 	srcname=$(ls ~/.config/nvim/ports/$exname/plugin/ | grep .vim)
 	echo "source ~/.config/nvim/ports/$exname/plugin/$srcname" >> ~/.config/nvim/ports/record.vim
@@ -45,12 +56,12 @@ fi
 if [[ $1 == update ]];
 then
 	declare -a plist
-	echo -e "${purple}==> Fetching extension list${reset}"
+	echo -e "${purple}==>${reset} Fetching extension list"
 	plist=$(ls ~/.config/nvim/ports/)
 	plist=${plist/record.vim}
 	for extension in $plist
 	do
-		echo -e "${green}==> Updating $extension${reset}"
+		echo -e "${green}==>${reset} Updating $extension"
 		cd ~/.config/nvim/ports/$extension
 		git config pull.rebase false
 		git pull
@@ -61,13 +72,13 @@ if [[ $1 == color ]];
 then
 	if [[ $2 == install ]];
 	then
-		echo -e "${purple}==> Creating work directory${reset}"
+		echo -e "${purple}==>${reset} Creating work directory"
 		rm -rf ~/.tmp/neoport/*
 		mkdir ~/.tmp
 		mkdir ~/.tmp/neoport
-		echo -e "${purple}==> Cloning git repo${reset}"
+		echo -e "${purple}==>${reset} Cloning git repo"
 		git clone https://github.com/$3 ~/.tmp/neoport/col
-		echo -e "${green}==> Installing color scheme${reset}"
+		echo -e "${green}==>${reset} Installing color scheme"
 		cp ~/.tmp/neoport/col/colors/*.vim ~/.config/nvim/colors/
 		ttbi=$(ls ~/.tmp/neoport/col/colors/ | cut -f 1 -d ' ')
 		echo
@@ -131,9 +142,6 @@ then
 	echo "Listing installed color schemes and applying one:"
 	echo "neoport color set list"
 	echo "neoport color set colorscheme"
-	echo
-	echo "Updating neoport:"
-	echo "sudo neoport 1up"
 	echo 
 	echo "TO SET UP NEOPORT FOR A USER, RUN 'neoport setup'"
 fi
