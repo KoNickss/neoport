@@ -48,7 +48,7 @@ then
 	cd ~/.config/nvim/ports/$exname
 	echo -e "${green}==>${reset} Installing extension"
 	echo -e "${yellow}==>${reset} Registering extension in database"
-	echo "set rtp+=~/.config/nvim/ports/$exname" >> ~/.config/nvim/ports/record.vim
+	echo "set rtp+=~/.config/nvim/ports/$exname/" >> ~/.config/nvim/ports/record.vim
 	srcname=$(ls ~/.config/nvim/ports/$exname/plugin/ | grep .vim)
 	echo "source ~/.config/nvim/ports/$exname/plugin/$srcname" >> ~/.config/nvim/ports/record.vim
 	echo -e "${green}==> Done.${reset}"
@@ -107,7 +107,7 @@ then
 	echo "neoPort v1.0.4"
 	echo "================================================"
 	echo "neoPort is an easy to use command-line package"
-	echo "manager for NeoVim (not vim). It has support for"
+	echo "manager for neoVim (not vim). It has support for"
 	echo "all extensions on github and all color schemes"
 	echo "on github. Make sure that you're using neoPort"
 	echo "on a fresh neovim setup as having other package"
