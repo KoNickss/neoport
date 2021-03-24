@@ -21,6 +21,7 @@ then
 fi
 if [[ $1 == setup ]];
 then
+	mkdir ~/.config
 	mkdir ~/.config/nvim
 	touch ~/.config/nvim/init.vim
 	mkdir ~/.config/nvim/ports
@@ -29,9 +30,15 @@ then
 	touch ~/.config/nvim/ports/record.vim
 	mkdir ~/.config/nvim/colors/
 	touch ~/.config/nvim/colors/record.vim
+	echo -e "${green}==> Done.${reset}"
 fi
 if [[ $1 == install ]];
 then
+	if [[ ! -f ~/.config/nvim/ports/record.vim ]];
+	then
+		echo -e "${red}==>${reset} Please run ${green}neoport setup${reset} to create a file structure in the config folder first"
+		exit 1
+	fi
 	if [[ $2 == "" ]];
 	then
 		echo -e "${red}==>${reset} Refusing to run installation due to missing argument"
@@ -62,6 +69,11 @@ then
 fi
 if [[ $1 == update ]];
 then
+	if [[ ! -f ~/.config/nvim/ports/record.vim ]];
+	then
+		echo -e "${red}==>${reset} Please run ${green}neoport setup${reset} to create a file structure in the config folder first"
+		exit 1
+	fi
 	declare -a plist
 	echo -e "${purple}==>${reset} Fetching extension list"
 	plist=$(ls ~/.config/nvim/ports/)
@@ -77,6 +89,11 @@ then
 fi
 if [[ $1 == remove ]];
 then
+	if [[ ! -f ~/.config/nvim/ports/record.vim ]];
+	then
+		echo -e "${red}==>${reset} Please run ${green}neoport setup${reset} to create a file structure in the config folder first"
+		exit 1
+	fi
 	if [[ $2 == "" ]];
 	then
 		echo -e "${red}==>${reset} Removal cancelled, lack of args."
@@ -97,6 +114,11 @@ then
 fi
 if [[ $1 == color ]];
 then
+	if [[ ! -f ~/.config/nvim/ports/record.vim ]];
+	then
+		echo -e "${red}==>${reset} Please run ${green}neoport setup${reset} to create a file structure in the config folder first"
+		exit 1
+	fi
 	if [[ $2 == install ]];
 	then
 		echo -e "${purple}==>${reset} Creating work directory"
