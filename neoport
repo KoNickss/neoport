@@ -15,20 +15,6 @@ then
 	purple="\033[0;35m"
 	yellow="\033[0;33m"
 fi
-#if [[ $1 == 1up ]];
-#then
-#	if [[ $(whoami) != root ]];
-#	then
-#		echo "This needs to be ran as root"
-#	fi
-#	if [[ $(whoami) == root ]];
-#	then
-#		rm -rf /tmp/neoport
-#		git clone https://github.com/konickss/neoport /tmp/neoport
-#		cd /tmp/neoport/
-#		/tmp/neoport/install u
-#	fi
-#fi
 if [[ $1 == setup ]];
 then
 	mkdir ~/.config/nvim
@@ -42,10 +28,27 @@ then
 fi
 if [[ $1 == install ]];
 then
+	if [[ $2 == "" ]];
+	then
+		echo -e "${red}==>${reset} Refusing to run installation due to missing argument"
+		exit 1
+	fi
 	exname=$(echo $2 | cut -f 2 -d '/')
 	echo -e "${purple}==>${reset} Cloning git repo"
-	git clone https://github.com/$2 ~/.config/nvim/ports/$exname
+	uname > /dev/null
+	git clone https://username:password@github.com/$2 ~/.config/nvim/ports/$exname
+	if [[ $? == 128 ]];
+	then
+		echo -e "${red}==>${reset} Failure in running git: invalid repo, stopping"
+		exit 1
+	fi
 	cd ~/.config/nvim/ports/$exname
+	if [[ $(ls | grep plugin) == "" ]];
+	then
+		echo -e "${red}==>${reset} Refusing to install non-vim repo"
+		cd .. ; rm -rf $exname
+		exit 1
+	fi
 	echo -e "${green}==>${reset} Installing extension"
 	echo -e "${yellow}==>${reset} Registering extension in database"
 	echo "set rtp+=~/.config/nvim/ports/$exname/" >> ~/.config/nvim/ports/record.vim
@@ -76,35 +79,43 @@ then
 		rm -rf ~/.tmp/neoport/*
 		mkdir ~/.tmp
 		mkdir ~/.tmp/neoport
+		if [[ $3 == "" ]];
+		then
+			echo -e "${red}==>${reset} Refusing to run installation due to missing argument"
+			exit 1
+		fi
 		echo -e "${purple}==>${reset} Cloning git repo"
-		git clone https://github.com/$3 ~/.tmp/neoport/col
+		git clone https://username:password@github.com/$3 ~/.tmp/neoport/col
+		if [[ $? == 128 ]];
+		then
+			echo -e "${red}==>${reset} Failure in running git: invalid repo, stopping"
+			exit 1
+		fi
 		echo -e "${green}==>${reset} Installing color scheme"
 		cp ~/.tmp/neoport/col/colors/*.vim ~/.config/nvim/colors/
 		ttbi=$(ls ~/.tmp/neoport/col/colors/ | cut -f 1 -d ' ')
 		echo
 		echo $ttbi
 		echo
-		neoport color set $ttbi
+		ttbin=$(echo $ttbi | cut -f 1 -d '.')
+		echo -e "Run ${green}neoport color set $ttbin${reset} to apply theme"
+	fi
+	if [[ $2 == list ]];
+	then
+		lst=$(ls ~/.config/nvim/colors/ | sed 's/\.vim *$//')
+		lst=${lst/record}
+		echo $lst
 	fi
 	if [[ $2 == set ]];
 	then
-		if [[ $3 == list ]];
-		then
-			lst=$(ls ~/.config/nvim/colors/ | sed 's/\.vim *$//')
-			lst=${lst/record}
-			echo $lst
-		fi
-		if [[ $3 != list ]];
-		then
-			echo "color $3" > ~/.config/nvim/colors/record.vim
+		echo "color $3" > ~/.config/nvim/colors/record.vim
 
-		fi
 	fi
 
 fi
 if [[ $1 == --help ]];
 then
-	echo "neoPort v1.0.4"
+	echo "neoPort v1.0.5"
 	echo "================================================"
 	echo "neoPort is an easy to use command-line package"
 	echo "manager for neoVim (not vim). It has support for"
@@ -140,8 +151,8 @@ then
 	echo "neoport color install author/repo"
 	echo 
 	echo "Listing installed color schemes and applying one:"
-	echo "neoport color set list"
+	echo "neoport color list"
 	echo "neoport color set colorscheme"
 	echo 
-	echo "TO SET UP NEOPORT FOR A USER, RUN 'neoport setup'"
+	echo "TO SET UP NEOPORT FOR A USER, RUN 'neoport setup' as that user"
 fi
