@@ -1,4 +1,8 @@
 #!/bin/bash
+if [[ $NPURL == "" ]];
+then
+	NPURL="github.com"
+fi
 if [[ $(uname) == "Linux" ]];
 then
 	reset="\e[0m"
@@ -36,7 +40,7 @@ then
 	exname=$(echo $2 | cut -f 2 -d '/')
 	echo -e "${purple}==>${reset} Cloning git repo"
 	uname > /dev/null
-	git clone https://username:password@github.com/$2 ~/.config/nvim/ports/$exname
+	git clone https://username:password@$NPURL/$2 ~/.config/nvim/ports/$exname
 	if [[ $? == 128 ]];
 	then
 		echo -e "${red}==>${reset} Failure in running git: invalid repo, stopping"
@@ -71,6 +75,26 @@ then
 		cd ..
 	done
 fi
+if [[ $1 == remove ]];
+then
+	if [[ $2 == "" ]];
+	then
+		echo -e "${red}==>${reset} Removal cancelled, lack of args."
+		exit 1
+	fi
+	if [[ $(ls ~/.config/nvim/ports | grep $2) == "" ]];
+	then
+		echo -e "${red}==>${reset} Extension not found, stopping"
+		exit 1
+	fi
+	echo -e "${purple}==>${reset} Attempting to uninstall $2"
+	echo -e "${green}==>${reset} Attempting to unport extension"
+	rm -rf ~/.config/nvim/ports/$2/
+	echo -e "${yellow}==>${reset} Removing extension from database"
+	grep -v /$2/ ~/.config/nvim/ports/record.vim > ~/.config/nvim/ports/record.vim.new
+	mv ~/.config/nvim/ports/record.vim.new ~/.config/nvim/ports/record.vim
+	echo -e "${green}==> Done. ${reset}"
+fi
 if [[ $1 == color ]];
 then
 	if [[ $2 == install ]];
@@ -85,7 +109,7 @@ then
 			exit 1
 		fi
 		echo -e "${purple}==>${reset} Cloning git repo"
-		git clone https://username:password@github.com/$3 ~/.tmp/neoport/col
+		git clone https://username:password@$NPURL/$3 ~/.tmp/neoport/col
 		if [[ $? == 128 ]];
 		then
 			echo -e "${red}==>${reset} Failure in running git: invalid repo, stopping"
@@ -115,7 +139,7 @@ then
 fi
 if [[ $1 == --help ]];
 then
-	echo "neoPort v1.0.5"
+	echo "neoPort v1.0.6"
 	echo "================================================"
 	echo "neoPort is an easy to use command-line package"
 	echo "manager for neoVim (not vim). It has support for"
@@ -143,6 +167,9 @@ then
 	echo 
 	echo "Installing extensions:"
 	echo "neoport install author/repo"
+	echo
+	echo "Removing extensions:"
+	echo "neoport remove repo"
 	echo 
 	echo "Updating all extensions:"
 	echo "neoport update"
@@ -156,3 +183,4 @@ then
 	echo 
 	echo "TO SET UP NEOPORT FOR A USER, RUN 'neoport setup' as that user"
 fi
+NPURL=""
