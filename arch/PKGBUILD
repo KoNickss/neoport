@@ -4,13 +4,13 @@ pkgver=1.0.6
 pkgrel=1
 epoch=
 pkgdesc=""
-arch=(x86_64 i686 ARM)
+arch=('any')
 url=""
 license=('GPL')
 groups=()
-depends=(git)
-makedepends=(autoconf automake binutils bison fakeroot file findutils flex gawk gcc gettext grep groff gzip libtool m4 make pacman patch pkgconf sed sudo texinfo which )
+depends=('git' 'grep' 'grep' 'bash' 'neovim')
 checkdepends=()
+makedepends=()
 optdepends=()
 provides=(neoport)
 conflicts=()
@@ -27,7 +27,7 @@ validpgpkeys=()
 package(){
 	mkdir $pkgdir/usr/
 	mkdir $pkgdir/usr/bin/
-	cp $startdir/neoport $pkgdir/usr/bin/neoport
+	cp $srcdir/neoport $pkgdir/usr/bin/neoport
 }
 
 
