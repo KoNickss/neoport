@@ -54,17 +54,22 @@ then
 		exit 1
 	fi
 	cd ~/.config/nvim/ports/$exname
-	if [[ $(ls | grep plugin) == "" ]];
+	if [[ $(ls | grep plugin) == "" ]] && [[ $(ls | grep autoload) == "" ]];
 	then
 		echo -e "${red}==>${reset} Refusing to install non-vim repo"
 		cd .. ; rm -rf $exname
 		exit 1
 	fi
+	scriptFolder=plugin
+	if [[ $(ls | grep plugin) == "" ]];
+	then
+		scriptFolder=autoload
+	fi
 	echo -e "${green}==>${reset} Installing extension"
 	echo -e "${yellow}==>${reset} Registering extension in database"
 	echo "set rtp+=~/.config/nvim/ports/$exname/" >> ~/.config/nvim/ports/record.vim
-	srcname=$(ls ~/.config/nvim/ports/$exname/plugin/ | grep .vim)
-	echo "source ~/.config/nvim/ports/$exname/plugin/$srcname" >> ~/.config/nvim/ports/record.vim
+	srcname=$(ls ~/.config/nvim/ports/$exname/$scriptFolder/ | grep .vim)
+	echo "source ~/.config/nvim/ports/$exname/$scriptFolder/$srcname" >> ~/.config/nvim/ports/record.vim
 	echo -e "${green}==> Done.${reset}"
 fi
 if [[ $1 == update ]];
