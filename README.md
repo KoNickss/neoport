@@ -1,4 +1,4 @@
-# NeoPort for Lnx and macOS
+# NeoPort, the neovim pm for Lnx and macOS
 
 ## Installation
 To install the program on Lnx, run the install executable with root privileges (`sudo ./install`) and follow the instructions. On macOS clone the repo and move the neoport file to your desired location and execute it
